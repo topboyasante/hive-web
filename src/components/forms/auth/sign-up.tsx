@@ -1,8 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -10,40 +12,99 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Logo from "@/components/ui/logo";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import axios from "axios";
+import { format } from "date-fns";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  username: z.string({
-    required_error: "Username is required",
+  username: z.string().min(3, {
+    message: "Username must be more than 3 characters",
   }),
-  fullname: z.string({
-    required_error: "Full Name is required",
+  first_name: z.string().min(1, {
+    message: "First Name must be more than 1 character",
+  }),
+  last_name: z.string().min(1, {
+    message: "Last Name must be more than 1 character",
   }),
   email: z.string().email({
-    message: "Your email is required.",
+    message: "Your email is required",
   }),
-  phone_number: z.number({
+  phone_number: z.string({
     required_error: "Invalid Phone Number",
   }),
-  dob: z.string({
+  date_of_birth: z.date({
     required_error: "Invalid Date",
   }),
-  password: z.string({
-    required_error: "Password is required",
-  }),
+  password: z
+    .string({
+      required_error: "Password is required",
+    })
+    .min(8, {
+      message: "Password should be more than 8 characters",
+    }),
+  password_confirmation: z
+    .string({
+      required_error: "Password Confirmation is required",
+    })
+    .min(8, {
+      message: "Password should be more than 8 characters",
+    }),
 });
 
 function SignUpForm() {
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const [isSubmittingForm, setIsSubmittingForm] = useState(false);
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      date_of_birth: new Date(),
+      phone_number: "",
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+    },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmittingForm(true);
+    axios
+      .post("http://localhost:6001/api/v1/users", values)
+      .then(() => {
+        setIsSubmittingForm(false);
+        toast({
+          title: "Good to go!",
+          description: `You've successfully created an account.`,
+        });
+        router.push("/sign-in");
+      })
+      .catch((err) => {
+        setIsSubmittingForm(false);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `${err.message}`,
+        });
+      });
   }
 
   return (
@@ -80,10 +141,10 @@ function SignUpForm() {
               />
               <FormField
                 control={form.control}
-                name="fullname"
+                name="first_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel>First Name</FormLabel>
                     <FormControl>
                       <Input className="w-full" {...field} />
                     </FormControl>
@@ -93,12 +154,12 @@ function SignUpForm() {
               />
               <FormField
                 control={form.control}
-                name="dob"
+                name="last_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Date of Birth</FormLabel>
+                    <FormLabel>Last Name</FormLabel>
                     <FormControl>
-                      <Input type="date" className="w-full" {...field} />
+                      <Input className="w-full" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -113,6 +174,50 @@ function SignUpForm() {
                     <FormControl>
                       <Input className="w-full" {...field} />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="date_of_birth"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Date of birth</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-full pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormDescription>
+                      Your date of birth is used to calculate your age.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -143,17 +248,37 @@ function SignUpForm() {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="password_confirmation"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <br />
+              <Link href={`/forgot-password`}>
+                <p className="text-sm text-neutral-600 underline underline-offset-4">
+                  Forgot Password?
+                </p>
+              </Link>
               <Button type="submit" className="w-full">
                 Sign Up
               </Button>
-              <Separator />
-              <p className="text-sm dark:text-neutral-600">
-                By signing in, you agree to the{" "}
-                <span className="underline">Terms of Service</span> and{" "}
-                <span className="underline">Privacy Policy</span>.
-              </p>
             </form>
           </Form>
+          <Separator className="my-5" />
+          <p className="text-sm dark:text-neutral-600">
+            By signing in, you agree to the{" "}
+            <span className="underline">Terms of Service</span> and{" "}
+            <span className="underline">Privacy Policy</span>.
+          </p>
         </div>
       </div>
     </div>

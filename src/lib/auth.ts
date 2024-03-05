@@ -30,6 +30,7 @@ export const authOptions: NextAuthOptions = {
             return user;
           })
           .catch((err) => {
+            console.log(err)
             throw new Error(`${err.response.data.message}`);
           });
 

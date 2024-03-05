@@ -18,6 +18,8 @@ import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Loader from "@/components/ui/loader";
 
 const formSchema = z.object({
   email: z
@@ -25,16 +27,21 @@ const formSchema = z.object({
       required_error: "Email is required",
     })
     .email(),
-  password: z.string({
-    required_error: "Password is required",
-  }).min(8,{
-    message:"Password should be more than 8 characters"
-  }),
+  password: z
+    .string({
+      required_error: "Password is required",
+    })
+    .min(8, {
+      message: "Password should be more than 8 characters",
+    }),
 });
 
 function SignInForm() {
   const { toast } = useToast();
   const router = useRouter();
+
+  const [isSubmittingForm, setIsSubmittingForm] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,17 +51,20 @@ function SignInForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmittingForm(true);
     const res = await signIn("credentials", {
       ...values,
       redirect: false,
     });
     if (res?.error) {
+      setIsSubmittingForm(false);
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description: `${res?.error}`,
       });
     } else {
+      setIsSubmittingForm(false);
       router.push("/tasks");
     }
   }
@@ -111,7 +121,11 @@ function SignInForm() {
                 </p>
               </Link>
               <Button type="submit" className="w-full">
-                Sign In
+                {isSubmittingForm ? (
+                  <Loader width="20" height="20" color="black" />
+                ) : (
+                  "Sign In"
+                )}
               </Button>
               <Separator />
               <p className="text-sm dark:text-neutral-600">
