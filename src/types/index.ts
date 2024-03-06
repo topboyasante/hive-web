@@ -11,3 +11,16 @@ interface SignupSchema {
   phone_number: string;
   email: string;
 }
+
+export interface BaseTaskSchema {
+  id:number
+  title: string;
+  category: string;
+  price: number;
+  description: string;
+  created_at: string;
+}
+export interface FullTaskSchema extends BaseTaskSchema {
+  requirements: string;
+  responsibilities: string;
+}

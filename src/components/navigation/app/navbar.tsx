@@ -1,21 +1,19 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { UserProfileDropdown } from "@/components/ui/user-profile-dropdown";
 import Logo from "../../ui/logo";
-import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 function Navbar() {
-  const session = useSession()
-  console.log(session)
   return (
     <nav className="w-screen h-[7vh] fixed top-0 bg-background">
       <div className="max-w-screen-xl mx-auto h-full p-5 flex justify-between items-center">
         <Logo />
-        <Button
-          onClick={() => signOut({ callbackUrl: "/sign-in", redirect: true })}
-        >
-          Search
-        </Button>
-        <div className="flex items-center gap-5"></div>
+        <div className="hidden md:flex items-center gap-5 bg-[#f5f5f5] dark:bg-[#121212] px-5 py-1 rounded-full">
+          <Link href={`/tasks/create`} className="text-sm">
+            Create Task
+          </Link>
+          <UserProfileDropdown />
+        </div>
       </div>
     </nav>
   );

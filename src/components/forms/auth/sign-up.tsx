@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Loader from "@/components/ui/loader";
 import Logo from "@/components/ui/logo";
 import {
   Popover,
@@ -70,7 +71,7 @@ function SignUpForm() {
   const router = useRouter();
 
   const [isSubmittingForm, setIsSubmittingForm] = useState(false);
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -269,7 +270,11 @@ function SignUpForm() {
                 </p>
               </Link>
               <Button type="submit" className="w-full">
-                Sign Up
+                {isSubmittingForm ? (
+                  <Loader width="20" height="20" color="black" />
+                ) : (
+                  "Sign Up"
+                )}
               </Button>
             </form>
           </Form>

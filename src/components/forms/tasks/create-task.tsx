@@ -1,21 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,18 +23,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  title: z.string({
-    required_error: "Title is required",
+  title: z.string().min(5, {
+    message: "Title should have a minimum of 5 characters",
   }),
   description: z
     .string({
       required_error: "Description is required",
     })
     .min(10, {
-      message: "Bio must be at least 10 characters.",
+      message: "Bio must be at least 10 characters",
     })
     .max(160, {
-      message: "Bio must not be longer than 30 characters.",
+      message: "Bio must not be longer than 30 characters",
     }),
   offering_price: z
     .number({
@@ -51,6 +51,12 @@ const formSchema = z.object({
 function CreateTaskForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      offering_price: 0,
+      category: "",
+    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {

@@ -8,8 +8,19 @@ import {
 } from "@/components/ui/card";
 import Avatar from "boring-avatars";
 import { Button } from "../ui/button";
+import { getTimeAgo } from "@/utils";
+import Link from "next/link";
 
-function TaskCard() {
+type TaskProps = {
+  id:number
+  title: string;
+  category: string;
+  price: number;
+  description: string;
+  createdAt: string;
+};
+
+function TaskCard({ ...props }: TaskProps) {
   return (
     <Card className="shadow-none">
       <CardHeader>
@@ -23,23 +34,26 @@ function TaskCard() {
             />
           </div>
           <div>
-            <CardTitle>Need a Babysitter</CardTitle>
+            <CardTitle className="text-sm">{props.title}</CardTitle>
             <CardDescription className="mt-[0.125rem]">
-              @mariamitchell • 2h ago
+              @mariamitchell • {getTimeAgo(props.createdAt)} ago
             </CardDescription>
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-sm">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem
-          amet, ipsum odit natus doloremque dolore eius voluptate quasi, esse
-          totam, porro tempore id corrupti inventore neque? Magni dolore tempore
-          perspiciatis.
-        </p>
+        <p className="text-sm">{props.description}</p>
       </CardContent>
-      <CardFooter>
-        <Button>View Task</Button>
+      <CardFooter className="justify-between items-center">
+        <p>
+          {new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "GHC",
+          }).format(Number(props.price))}
+        </p>
+        <Button variant={`link`} className="p-0">
+          <Link href={`/tasks/${props.id}`}>View Task</Link>
+        </Button>
       </CardFooter>
     </Card>
   );
