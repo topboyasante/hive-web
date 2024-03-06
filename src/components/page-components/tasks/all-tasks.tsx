@@ -30,11 +30,12 @@ function AllTasks() {
                 {tasks && tasks.length < 0 ? (
                   <div>No Tasks, Yet</div>
                 ) : (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  <div className="">
                     {tasks &&
-                      tasks.map((item) => {
+                    // Change the way we sort here
+                      tasks.sort((a, b) => b.id - a.id).map((item) => {
                         return (
-                          <div className="col-span-1" key={item.id}>
+                          <div key={item.id}>
                             <TaskCard
                               id={item.id}
                               title={item.title}

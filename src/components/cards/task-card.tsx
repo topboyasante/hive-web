@@ -1,18 +1,8 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import Avatar from "boring-avatars";
-import { Button } from "../ui/button";
 import { getTimeAgo } from "@/utils";
 import Link from "next/link";
 
 type TaskProps = {
-  id:number
+  id: number;
   title: string;
   category: string;
   price: number;
@@ -22,40 +12,37 @@ type TaskProps = {
 
 function TaskCard({ ...props }: TaskProps) {
   return (
-    <Card className="shadow-none">
-      <CardHeader>
-        <div className="flex gap-5 items-center">
+    <Link href={`/tasks/${props.id}`}>
+      <div className="border-b py-5 flex flex-col justify-center">
+        <div className="w-full h-full">
           <div>
-            <Avatar
-              size={45}
-              name="Maria Mitchell"
-              variant="beam"
-              colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
-            />
+            <span className="text-sm text-neutral-500">
+              Posted {getTimeAgo(props.createdAt)} ago
+            </span>
+            <h4>{props.title}</h4>
+            <p className="text-sm">
+              Budget: {""}
+              <span>
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "GHC",
+                }).format(Number(props.price))}
+              </span>
+            </p>
           </div>
+          <br />
           <div>
-            <CardTitle className="text-sm">{props.title}</CardTitle>
-            <CardDescription className="mt-[0.125rem]">
-              @mariamitchell • {getTimeAgo(props.createdAt)} ago
-            </CardDescription>
+            <p className="text-sm">{props.description}</p>
+          </div>
+          <br />
+          <div>
+            <p className="uppercase text-sm bg-[#f5f5f5] dark:bg-[#121212] w-fit px-4 py-1 rounded-full">
+              {props.category}
+            </p>
           </div>
         </div>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm">{props.description}</p>
-      </CardContent>
-      <CardFooter className="justify-between items-center">
-        <p>
-          {new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "GHC",
-          }).format(Number(props.price))}
-        </p>
-        <Button variant={`link`} className="p-0">
-          <Link href={`/tasks/${props.id}`}>View Task</Link>
-        </Button>
-      </CardFooter>
-    </Card>
+      </div>
+    </Link>
   );
 }
 

@@ -39,14 +39,7 @@ export function UserProfileDropdown() {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>
-          <div>
-            {session.data?.user.first_name} {session.data?.user.last_name}
-          </div>
-          <p className="text-sm font-normal text-neutral-400">
-            @{session.data?.user.username}
-          </p>
-        </DropdownMenuLabel>
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link href={`profile`}>
