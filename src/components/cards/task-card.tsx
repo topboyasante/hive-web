@@ -9,6 +9,7 @@ type TaskProps = {
   price: number;
   description: string;
   createdAt: string;
+  number_of_applicants:number
 };
 
 function TaskCard({ ...props }: TaskProps) {
@@ -34,6 +35,10 @@ function TaskCard({ ...props }: TaskProps) {
           <br />
           <div>
             <p className="text-sm">{props.description}</p>
+          </div>
+          <br />
+          <div>
+            <p className="text-sm"><span>Applicants:</span> {props.number_of_applicants}</p>
           </div>
           <br />
           <div>

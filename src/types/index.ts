@@ -13,12 +13,13 @@ interface SignupSchema {
 }
 
 export interface BaseTaskSchema {
-  id:number
+  id: number;
   title: string;
   category: string;
   price: number;
   description: string;
   created_at: string;
+  number_of_applicants: number;
 }
 export interface FullTaskSchema extends BaseTaskSchema {
   requirements: string;

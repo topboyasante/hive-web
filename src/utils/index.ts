@@ -1,3 +1,5 @@
+import { TASK_CATEGORIES } from "@/constants";
+
 export const calculateAge = (date: Date) => {
   const birthdateDate = new Date(date);
   const currentDate = new Date();
@@ -19,7 +21,9 @@ export function getTimeAgo(dateString: string): string {
   const currentDate = new Date();
   const pastDate = new Date(dateString);
 
-  const timeDifferenceInSeconds = Math.floor((currentDate.getTime() - pastDate.getTime()) / 1000);
+  const timeDifferenceInSeconds = Math.floor(
+    (currentDate.getTime() - pastDate.getTime()) / 1000
+  );
 
   if (timeDifferenceInSeconds < 60) {
     return `${timeDifferenceInSeconds}s`;
@@ -34,7 +38,17 @@ export function getTimeAgo(dateString: string): string {
     return `${days}d`;
   } else {
     // If it's been more than a month, switch to an absolute date format
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
     return pastDate.toLocaleDateString(undefined, options);
   }
+}
+
+export function findCategory(category: string) {
+  const selectedCategory = TASK_CATEGORIES.find((cat) => cat.value === category);
+
+  return selectedCategory?.name || "Category"
 }

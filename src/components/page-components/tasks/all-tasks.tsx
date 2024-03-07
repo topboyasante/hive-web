@@ -56,6 +56,7 @@ function AllTasks() {
                                 description={item.description}
                                 price={item.price}
                                 category={item.category}
+                                number_of_applicants={item.number_of_applicants}
                               />
                             </div>
                           );
