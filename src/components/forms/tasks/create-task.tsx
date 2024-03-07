@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -10,6 +11,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Loader from "@/components/ui/loader";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -18,7 +25,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { TASK_CATEGORIES } from "@/constants";
+import useMutationRequest from "@/hooks/useMutation";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -31,36 +44,60 @@ const formSchema = z.object({
       required_error: "Description is required",
     })
     .min(10, {
-      message: "Bio must be at least 10 characters",
+      message: "Field must be at least 10 characters",
     })
     .max(160, {
-      message: "Bio must not be longer than 30 characters",
+      message: "Field must not be longer than 160 characters",
     }),
-  offering_price: z
-    .number({
-      required_error: "Price is required",
+  requirements: z
+    .string({
+      required_error: "Requirements is required",
     })
-    .min(50, {
-      message: "The base amount for each task is GHC 50",
+    .min(10, {
+      message: "Field must be at least 10 characters",
+    })
+    .max(160, {
+      message: "Field must not be longer than 160 characters",
     }),
+  responsibilities: z
+    .string({
+      required_error: "Responsibilities is required",
+    })
+    .min(10, {
+      message: "Field must be at least 10 characters",
+    })
+    .max(160, {
+      message: "Field must not be longer than 160 characters",
+    }),
+  price: z.string().transform((v) => Number(v) || 0),
+  due_date: z.date({
+    required_error: "Invalid Date",
+  }),
   category: z.string({
     required_error: "Category is required",
   }),
 });
 
 function CreateTaskForm() {
+  const { createTask, isCreatingTask } = useMutationRequest("tasks");
+  const session = useSession();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       description: "",
-      offering_price: 0,
+      responsibilities: "",
+      requirements: "",
+      price: 0,
       category: "",
+      due_date: new Date(),
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const payload = { ...values, user_id: session.data?.user.id };
+    createTask(payload);
   }
   return (
     <div>
@@ -102,13 +139,96 @@ function CreateTaskForm() {
           />
           <FormField
             control={form.control}
-            name="offering_price"
+            name="requirements"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Requirements</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="What is the task about?"
+                    className="resize-none"
+                    rows={12}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Provide any and all information you deem valuable.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="responsibilities"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Responsibilities</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="What is the task about?"
+                    className="resize-none"
+                    rows={12}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Provide any and all information you deem valuable.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="price"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Offering Price</FormLabel>
                 <FormControl>
                   <Input type="number" {...field} />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="due_date"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Due Date</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) =>
+                        date < new Date() || date < new Date("1900-01-01")
+                      }
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
@@ -129,9 +249,13 @@ function CreateTaskForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                    {TASK_CATEGORIES.map((item, index) => {
+                      return (
+                        <SelectItem value={item.value} key={index}>
+                          {item.name}
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
                 <FormDescription>
@@ -142,7 +266,11 @@ function CreateTaskForm() {
             )}
           />
           <Button type="submit" className="w-full">
-            Post Task
+            {isCreatingTask ? (
+              <Loader width="20" height="20" color="black" />
+            ) : (
+              " Post Task"
+            )}
           </Button>
         </form>
       </Form>

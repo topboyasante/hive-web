@@ -6,11 +6,11 @@ import { useToast } from "@/components/ui/use-toast";
 
 const queryClient = new QueryClient();
 
-function useMutationRequest<T>(eventId?: string, key?: string) {
+function useMutationRequest<T>(key?: string) {
   const { toast } = useToast();
   const router = useRouter();
   const session = useSession();
-  const accessToken = session.data?.user.auth_token;
+  const accessToken = session.data?.user?.token;
 
   // Create Task
   const {
@@ -38,7 +38,7 @@ function useMutationRequest<T>(eventId?: string, key?: string) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: `${error?.message}`,
+        description: `${error?.response?.data.errors[0]}`,
       });
     },
   });

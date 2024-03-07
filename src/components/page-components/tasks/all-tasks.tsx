@@ -1,8 +1,10 @@
 "use client";
 import TaskCard from "@/components/cards/task-card";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFetchData } from "@/hooks/useFetchData";
 import { BaseTaskSchema } from "@/types";
+import Link from "next/link";
 
 function AllTasks() {
   const {
@@ -27,26 +29,37 @@ function AllTasks() {
               </div>
             ) : (
               <div>
-                {tasks && tasks.length < 0 ? (
-                  <div>No Tasks, Yet</div>
+                {tasks && tasks.length === 0 ? (
+                  <div className="w-full h-full flex flex-col justify-center items-center my-8">
+                    <p>No Tasks, Yet</p>
+                    <br />
+                    <Link
+                      href={`/tasks/create`}
+                      className="text-sm text-nowrap"
+                    >
+                      <Button>Create Task</Button>
+                    </Link>
+                  </div>
                 ) : (
                   <div className="">
                     {tasks &&
-                    // Change the way we sort here
-                      tasks.sort((a, b) => b.id - a.id).map((item) => {
-                        return (
-                          <div key={item.id}>
-                            <TaskCard
-                              id={item.id}
-                              title={item.title}
-                              createdAt={item.created_at}
-                              description={item.description}
-                              price={item.price}
-                              category={item.category}
-                            />
-                          </div>
-                        );
-                      })}
+                      // Change the way we sort here
+                      tasks
+                        .sort((a, b) => b.id - a.id)
+                        .map((item) => {
+                          return (
+                            <div key={item.id}>
+                              <TaskCard
+                                id={item.id}
+                                title={item.title}
+                                createdAt={item.created_at}
+                                description={item.description}
+                                price={item.price}
+                                category={item.category}
+                              />
+                            </div>
+                          );
+                        })}
                   </div>
                 )}
               </div>

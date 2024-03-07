@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 
 export function useFetchData<T>(key: string) {
   const session = useSession();
-  const accessToken = session.data?.user.auth_token;
+  const accessToken = session.data?.user.token;
 
   const { isLoading, data, isError, error } = useQuery<T>({
     queryKey: [key],

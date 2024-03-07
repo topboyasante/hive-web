@@ -25,11 +25,12 @@ export const authOptions: NextAuthOptions = {
           .post("http://localhost:6001/api/v1/auth/login", { email, password })
           .then((res) => {
             const user = {
+              id:res.data.id,
               first_name: res.data.first_name,
               last_name: res.data.last_name,
               username: res.data.username,
               email: res.data.email,
-              auth_token: res.data.auth_token,
+              token: res.data.token,
             };
             return user;
           })

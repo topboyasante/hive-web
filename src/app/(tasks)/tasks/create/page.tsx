@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 function Page() {
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-   mx-auto">
       <div className="my-5">
         <BackButton />
       </div>

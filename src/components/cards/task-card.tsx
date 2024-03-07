@@ -1,5 +1,6 @@
 import { getTimeAgo } from "@/utils";
 import Link from "next/link";
+import CategoryCheck from "../ui/category-check";
 
 type TaskProps = {
   id: number;
@@ -36,9 +37,7 @@ function TaskCard({ ...props }: TaskProps) {
           </div>
           <br />
           <div>
-            <p className="uppercase text-sm bg-[#f5f5f5] dark:bg-[#121212] w-fit px-4 py-1 rounded-full">
-              {props.category}
-            </p>
+            <CategoryCheck category={props.category} />
           </div>
         </div>
       </div>

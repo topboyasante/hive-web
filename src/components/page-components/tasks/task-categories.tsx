@@ -9,7 +9,7 @@ function TaskCategories() {
           {TASK_CATEGORIES.map((item, index) => {
             return (
               <span className="text-sm text-nowrap text-neutral-500" key={index}>
-                {item}
+                {item.name}
               </span>
             );
           })}
