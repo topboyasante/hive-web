@@ -16,7 +16,7 @@ function Page() {
       </div>
       <div>
         <h2 className="text-3xl font-semibold">Create A Task</h2>
-        <p className="text-[#a3a3a3] text-md">Lorem ipsum dolor sit amet.</p>
+        <p className="text-[#a3a3a3] text-md">Need to get something done but can&apos;t? Assign it to a peer!</p>
       </div>
       <div className="my-8">
         <CreateTaskForm />

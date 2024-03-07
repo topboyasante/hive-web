@@ -15,7 +15,7 @@ type TaskProps = {
 function TaskCard({ ...props }: TaskProps) {
   return (
     <Link href={`/tasks/${props.id}`}>
-      <div className="border-b py-5 flex flex-col justify-center">
+      <div className="border-b p-5 flex flex-col justify-center hover:bg-[#f9f9f9] dark:hover:bg-[#191919] ease duration-200">
         <div className="w-full h-full">
           <div>
             <span className="text-sm text-neutral-500">
@@ -38,7 +38,7 @@ function TaskCard({ ...props }: TaskProps) {
           </div>
           <br />
           <div>
-            <p className="text-sm"><span>Applicants:</span> {props.number_of_applicants}</p>
+            <p className="text-sm text-neutral-500"><span>Applicants:</span> {props.number_of_applicants}</p>
           </div>
           <br />
           <div>

@@ -46,8 +46,8 @@ const formSchema = z.object({
     .min(10, {
       message: "Field must be at least 10 characters",
     })
-    .max(160, {
-      message: "Field must not be longer than 160 characters",
+    .max(500, {
+      message: "Field must not be longer than 500 characters",
     }),
   requirements: z
     .string({
@@ -56,8 +56,8 @@ const formSchema = z.object({
     .min(10, {
       message: "Field must be at least 10 characters",
     })
-    .max(160, {
-      message: "Field must not be longer than 160 characters",
+    .max(500, {
+      message: "Field must not be longer than 500 characters",
     }),
   responsibilities: z
     .string({
@@ -66,8 +66,8 @@ const formSchema = z.object({
     .min(10, {
       message: "Field must be at least 10 characters",
     })
-    .max(160, {
-      message: "Field must not be longer than 160 characters",
+    .max(500, {
+      message: "Field must not be longer than 500 characters",
     }),
   price: z.string().transform((v) => Number(v) || 0),
   due_date: z.date({
@@ -145,7 +145,7 @@ function CreateTaskForm() {
                 <FormLabel>Requirements</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="What is the task about?"
+                    placeholder="What is required of the applicant?"
                     className="resize-none"
                     rows={12}
                     {...field}
@@ -166,7 +166,7 @@ function CreateTaskForm() {
                 <FormLabel>Responsibilities</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="What is the task about?"
+                    placeholder="What does the task involve?"
                     className="resize-none"
                     rows={12}
                     {...field}
