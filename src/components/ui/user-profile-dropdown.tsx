@@ -42,7 +42,7 @@ export function UserProfileDropdown() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={`/profile`}>
+          <Link href={`/user/${session.data?.user.id}`}>
             <DropdownMenuItem>Profile</DropdownMenuItem>
           </Link>
           <Link href={`/settings`}>

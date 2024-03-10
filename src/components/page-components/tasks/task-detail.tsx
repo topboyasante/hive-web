@@ -18,7 +18,7 @@ function TaskDetail() {
   const session = useSession();
   const params = useParams();
   const { data, isLoading, isError } = useFetchByID<FullTaskSchema>(
-    `${params.id}`,
+    `tasks/${params.id}`,
     "task_detail"
   );
   const { ApplyForTask, isApplyingForTask } = useMutationRequest();

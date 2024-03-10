@@ -40,11 +40,6 @@ function Main() {
               <Button className="rounded-full">Get Started</Button>
             </Link>
           </div>
-          <Image
-            src={theme === "light" ? img_1_light : img_1_dark}
-            alt="hero"
-            className="border rounded-md"
-          />
         </div>
       </div>
     </div>

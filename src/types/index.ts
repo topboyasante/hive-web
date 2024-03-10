@@ -1,15 +1,15 @@
-interface LoginSchema {
-  username: string;
-  password: string;
-}
-
-interface SignupSchema {
-  username: string;
-  fullname: string;
-  password: string;
-  dob: Date;
-  phone_number: string;
+export interface UserProfileSchema {
+  age: number;
+  date_of_birth: string;
   email: string;
+  first_name: string;
+  id: string;
+  last_name: string;
+  phone_number: string;
+  residential_address: string;
+  role: string;
+  token_number: number;
+  username: string;
 }
 
 export interface BaseTaskSchema {
@@ -27,7 +27,7 @@ export interface BaseTaskSchema {
     phone_number: string;
     email: string;
   };
-  due_date:string
+  due_date: string;
 }
 export interface FullTaskSchema extends BaseTaskSchema {
   requirements: string;
