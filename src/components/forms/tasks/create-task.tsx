@@ -125,7 +125,7 @@ function CreateTaskForm() {
                 <FormControl>
                   <Textarea
                     placeholder="What is the task about?"
-                    className="resize-none"
+                    className="resize-none whitespace-pre-line"
                     rows={12}
                     {...field}
                   />
@@ -146,7 +146,7 @@ function CreateTaskForm() {
                 <FormControl>
                   <Textarea
                     placeholder="What is required of the applicant?"
-                    className="resize-none"
+                    className="resize-none whitespace-pre-line"
                     rows={12}
                     {...field}
                   />
@@ -167,7 +167,7 @@ function CreateTaskForm() {
                 <FormControl>
                   <Textarea
                     placeholder="What does the task involve?"
-                    className="resize-none"
+                    className="resize-none whitespace-pre-line"
                     rows={12}
                     {...field}
                   />

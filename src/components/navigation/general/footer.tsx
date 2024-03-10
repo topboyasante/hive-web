@@ -4,7 +4,7 @@ import Logo from "../../ui/logo";
 
 function Footer() {
   return (
-    <footer className="w-screen h-auto">
+    <footer className="w-screen">
       <div className="max-w-screen-xl mx-auto h-full p-5">
         {/* Top */}
         <div className="w-full h-full flex justify-between items-center">

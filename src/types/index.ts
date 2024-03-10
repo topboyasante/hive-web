@@ -27,6 +27,7 @@ export interface BaseTaskSchema {
     phone_number: string;
     email: string;
   };
+  due_date:string
 }
 export interface FullTaskSchema extends BaseTaskSchema {
   requirements: string;

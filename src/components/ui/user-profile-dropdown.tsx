@@ -42,10 +42,10 @@ export function UserProfileDropdown() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={`profile`}>
+          <Link href={`/profile`}>
             <DropdownMenuItem>Profile</DropdownMenuItem>
           </Link>
-          <Link href={`settings`}>
+          <Link href={`/settings`}>
             <DropdownMenuItem>Settings</DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>

@@ -35,6 +35,9 @@ const formSchema = z.object({
   username: z.string().min(3, {
     message: "Username must be more than 3 characters",
   }),
+  residential_address: z.string().min(1, {
+    message: "Address must be more than 1 characters",
+  }),
   first_name: z.string().min(1, {
     message: "First Name must be more than 1 character",
   }),
@@ -83,13 +86,15 @@ function SignUpForm() {
       email: "",
       password: "",
       password_confirmation: "",
+      residential_address:""
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const payload = { ...values, role: "employer" };
     setIsSubmittingForm(true);
     axios
-      .post("http://localhost:6001/api/v1/users", values)
+      .post("http://localhost:6001/api/v1/users", payload)
       .then(() => {
         setIsSubmittingForm(false);
         toast({
@@ -103,7 +108,7 @@ function SignUpForm() {
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
-          description: `${err.message}`,
+          description: `${err.response.data.errors[0]}`,
         });
       });
   }
@@ -159,6 +164,19 @@ function SignUpForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input className="w-full" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="residential_address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Residential Address</FormLabel>
                     <FormControl>
                       <Input className="w-full" {...field} />
                     </FormControl>

@@ -48,7 +48,24 @@ export function getTimeAgo(dateString: string): string {
 }
 
 export function findCategory(category: string) {
-  const selectedCategory = TASK_CATEGORIES.find((cat) => cat.value === category);
+  const selectedCategory = TASK_CATEGORIES.find(
+    (cat) => cat.value === category
+  );
 
-  return selectedCategory?.name || "Category"
+  return selectedCategory?.name || "Category";
+}
+
+export function formatDate(input: string): string {
+  const inputDate = new Date(input);
+
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
+    inputDate
+  );
+  return formattedDate;
 }

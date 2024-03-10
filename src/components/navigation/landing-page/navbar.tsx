@@ -4,7 +4,7 @@ import { Button } from "../../ui/button";
 
 function Navbar() {
   return (
-    <nav className="w-screen h-[7vh] fixed top-0 bg-background">
+    <nav className="w-screen h-[7vh] fixed top-0">
       <div className="max-w-screen-xl mx-auto h-full p-5 flex justify-between items-center">
         <Logo />
         <div className="flex items-center gap-5">
