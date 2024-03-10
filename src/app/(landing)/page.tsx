@@ -1,4 +1,4 @@
-import Main from "@/components/navigation/landing-page/main";
+import Main from "@/components/page-components/landing-page/main";
 import React from "react";
 
 function Home() {

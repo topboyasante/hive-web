@@ -25,7 +25,6 @@ function TaskDetail() {
 
   function applyForTask() {
     const payload = {
-      message: "please employ i beg",
       task_id: `${params.id}`,
       user_id: `${session.data?.user.id}`,
     };
@@ -108,7 +107,13 @@ function TaskDetail() {
                           <Button variant={`secondary`}>Edit Task</Button>
                         </Link>
                       )}
-                      <Button onClick={() => applyForTask()}>Apply</Button>
+                      <Button onClick={() => applyForTask()}>
+                        {isApplyingForTask ? (
+                          <Loader width="20" height="20" color="black" />
+                        ) : (
+                          "Apply"
+                        )}
+                      </Button>
                     </div>
                   </div>
                 </div>
