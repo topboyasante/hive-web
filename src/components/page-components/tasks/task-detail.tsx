@@ -101,19 +101,31 @@ function TaskDetail() {
                       </p>
                     </div>
                     <br />
-                    <div className="flex justify-end space-x-5">
-                      {data.user.username === session.data?.user.username && (
-                        <Link href={`edit/${data.id}`}>
-                          <Button variant={`secondary`}>Edit Task</Button>
-                        </Link>
-                      )}
-                      <Button onClick={() => applyForTask()}>
-                        {isApplyingForTask ? (
-                          <Loader width="20" height="20" color="black" />
-                        ) : (
-                          "Apply"
+                    <div className="flex justify-between items-center gap-5">
+                      <div>
+                        {data.user.username === session.data?.user.username && (  
+                          <Link href={`/applicants/${data.id}`}>
+                            <Button variant={`secondary`}>
+                              See Applicants
+                            </Button>
+                          </Link>
                         )}
-                      </Button>
+                      </div>
+                      <div className="flex items-center gap-5">
+                        {data.user.username === session.data?.user.username && (
+                          <Link href={`edit/${data.id}`}>
+                            <Button variant={`outline`}>Edit Task</Button>
+                          </Link>
+                        )}
+
+                        <Button onClick={() => applyForTask()}>
+                          {isApplyingForTask ? (
+                            <Loader width="20" height="20" color="black" />
+                          ) : (
+                            "Apply"
+                          )}
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>

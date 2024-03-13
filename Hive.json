@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"first_name\": \"kwame\",\r\n    \"last_name\": \"bio\",\r\n    \"username\": \"kwamebio\",\r\n    \"email\": \"kwameagyemang75@gmail.com\",\r\n    \"password\": \"Jigg$nigga\",\r\n    \"password_confirmation\": \"Jigg$nigga\",\r\n    \"residential_address\": \"Accra\",\r\n    \"phone_number\": \"2312312312\",\r\n    \"age\": 25,\r\n    \"date_of_birth\": \"17-02-1996\",\r\n    \"role\": \"employer\"\r\n    \r\n}",
+							"raw": "{\r\n    \"first_name\": \"kwame\",\r\n    \"last_name\": \"bio\",\r\n    \"username\": \"kwamebio\",\r\n    \"email\": \"kwameagyemang71@gmail.com\",\r\n    \"password\": \"Jigg$nigga\",\r\n    \"password_confirmation\": \"Jigg$nigga\",\r\n    \"residential_address\": \"Accra\",\r\n    \"phone_number\": \"2312312312\",\r\n    \"age\": 25,\r\n    \"date_of_birth\": \"17-02-1996\",\r\n    \"role\": \"employer\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -46,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"kwameagyemang75@gmail.com\",\r\n    \"password\": \"Jigg$nigga\"   \r\n    \r\n}",
+							"raw": "{\r\n    \"email\": \"kwameagyemang71@gmail.com\",\r\n    \"password\": \"Jigg$nigga\"   \r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -126,40 +126,20 @@
 				{
 					"name": "fetch user",
 					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "all user for a particular task",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "ae774602c6aa351885e6",
 									"type": "string"
 								}
 							]
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"task_id\": 14\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users",
+							"raw": "http://localhost:3000/api/v1/users/67695e70-0253-457b-a1a9-389741828799",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -168,7 +148,8 @@
 							"path": [
 								"api",
 								"v1",
-								"users"
+								"users",
+								"67695e70-0253-457b-a1a9-389741828799"
 							]
 						}
 					},
@@ -187,7 +168,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "61ed8a331c2744c81f98",
+									"value": "c4c283ab3e180d39d360",
 									"type": "string"
 								}
 							]
@@ -196,7 +177,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"man at sea\",\r\n    \"description\": \"man went to the sea to stay there\",\r\n    \"requirements\": \"computer science degree\",\r\n    \"responsibilities\": \"build scalable applications\",\r\n    \"completed\": \"false\",\r\n    \"price\": 900.00,\r\n    \"due_date\": \"17-02-2025\",\r\n    \"category\": \"housekeeping\",\r\n    \"user_id\": 4\r\n\r\n}",
+							"raw": "{\r\n    \"title\": \"man at sea\",\r\n    \"description\": \"man went to the sea to stay there\",\r\n    \"requirements\": \"computer science degree\",\r\n    \"responsibilities\": \"build scalable applications\",\r\n    \"completed\": \"false\",\r\n    \"price\": 900.00,\r\n    \"due_date\": \"17-02-2025\",\r\n    \"category\": \"odd_jobs\",\r\n    \"user_id\": \"2574f5b4-34f6-4fe2-a378-fbbb0c1d92e1\"\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -214,6 +195,50 @@
 								"api",
 								"v1",
 								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all user for a particular task",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "7c53a656976823ed301d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task_id\": \"49b2efdd-6351-417c-a448-9be6d00285c6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/tasks/task_applicants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								"task_applicants"
 							]
 						}
 					},
@@ -309,8 +334,42 @@
 				{
 					"name": "assign task to user",
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9084dc02634cb6c721d0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task_id\": \"7d62b1cf-d5dd-4b6a-9ff7-9ee5543dcaa0\",\r\n    \"user_id\": \"67695e70-0253-457b-a1a9-389741828799\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/tasks/7d62b1cf-d5dd-4b6a-9ff7-9ee5543dcaa0/assign",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								"7d62b1cf-d5dd-4b6a-9ff7-9ee5543dcaa0",
+								"assign"
+							]
+						}
 					},
 					"response": []
 				}
@@ -327,7 +386,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "79101949aa3cd00918c9",
+									"value": "81f97a3b8a712b694f29",
 									"type": "string"
 								}
 							]
@@ -336,7 +395,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"full_name\": \"kwame duah\",\r\n    \"email\": \"kwameagyemang75@gmail.com\",\r\n    \"residential_address\": \"Accra\",\r\n    \"phone_number\": \"2312312312\",\r\n    \"message\": \"please employ i beg\",\r\n    \"task_id\": 14,\r\n    \"user_id\": 9\r\n}",
+							"raw": "{\r\n    \"task_id\": \"49b2efdd-6351-417c-a448-9be6d00285c6\",\r\n    \"user_id\": \"2574f5b4-34f6-4fe2-a378-fbbb0c1d92e1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

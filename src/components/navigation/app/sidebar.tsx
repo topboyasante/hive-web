@@ -15,7 +15,7 @@ function SideBar() {
               size={40}
               name={session.data?.user.username}
               variant="beam"
-              colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
+              colors={["#78C0E0", "#F28C35", "#9BB54D", "#E15780", "#4D8DBE"]}
             />
             <div>
               {session.data?.user.first_name && (

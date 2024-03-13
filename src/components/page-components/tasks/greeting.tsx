@@ -13,6 +13,7 @@ function Greeting() {
           <div>
             <div>
               <h2>Hello, {session.data?.user.username}.</h2>
+              <br />
               <div className="flex md:hidden w-full max-w-sm items-center space-x-2">
                 <Input
                   type="text"
