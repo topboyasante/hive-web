@@ -14,7 +14,7 @@ export default function LandingPage({ children }: LandingPageProps) {
       <div className="pt-[7vh]">
         <TaskCategories />
         <br />
-        <div className="max-w-screen-xl mx-auto h-full flex flex-col md:flex-row gap-8 p-5">
+        <div className="max-w-screen-2xl mx-auto h-full flex flex-col md:flex-row gap-8 p-5">
           <div className="w-full md:w-[25%]">
             <SideBar />
           </div>
